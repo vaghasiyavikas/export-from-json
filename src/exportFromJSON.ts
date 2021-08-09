@@ -49,9 +49,7 @@ function exportFromJSON<R = void> ({
     }
   }
 
-  const fieldsMapper = _createFieldsMapper(fields)
-
-  const safeData = fieldsMapper(_prepareData(data))
+  const safeData = data
 
   const JSONData = _createJSONData(safeData, replacer, space)
 
@@ -79,9 +77,7 @@ function exportFromJSON<R = void> ({
       return processor(content, exportType, normalizeFileName(fileName, extension ?? 'xls', fileNameFormatter))
     }
     case 'xml': {
-      const content = createXMLData(safeData)
-
-      return processor(content, exportType, normalizeFileName(fileName, extension ?? 'xml', fileNameFormatter))
+      return processor(safeData, exportType, normalizeFileName(fileName, extension ?? 'xml', fileNameFormatter))
     }
     default:
       throw new Error(MESSAGE_UNKNOWN_EXPORT_TYPE)
